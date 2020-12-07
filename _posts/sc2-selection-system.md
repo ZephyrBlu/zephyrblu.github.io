@@ -3,23 +3,33 @@ layout: post
 title: Reverse Engineering the StarCraft II Selection System
 ---
 
-This is the story of 
-
--- punch intro --
-
 If you're unfamiliar with StarCraft II (SC2) it's a 1v1 Real-Time Strategy game that embodies the "commander" fantasy. You build up a base, an economy and an army and attempt to destroy all of your opponent's buildings.
 
-You control **almost everything** that happens in the game (Hence, the "commander" fantasy), and that means you're going to be clicking and using your keyboard a lot. Players in the 95%th percentile (Top 5%) or above often play at 200-300 actions per minute (4-5 actions per **second**!).
+You control **almost everything** that happens in the game (Hence, the "commander" fantasy), and that means you're going to be clicking and using your keyboard a lot. High level players (Top ~5% or above) often play at 200-300 actions per minute (4-5 actions per **second**!).
 
-SC2 also has a powerful hotkey system and provides you with a few simple but flexible ways to manipulate selections. High level players frequently use these tools throughout the game to efficiently manage their resources and quickly execute tasks.
+SC2 also has a powerful hotkey system and provides you with a few simple but flexible ways to manipulate selections of units and buildings. High level players frequently use these tools throughout the game to efficiently manage their resources and quickly execute tasks.
 
-Because the game is real-time, using your time effectively is extremely important. This is where the selection system comes in.
+Because the game is real-time, multi-tasking is extremely important and is one of the key differences between tiers of players.
 
-## The Hypotheses
+I like exploring different ways to analyze SC2 using the [replay parser](https://github.com/Zephyrblu/zephyrus-sc2-parser) I'm building, and being able to track a player's selections at every point in the game would provide a great foundation to analyze multi-tasking.
 
-One of the biggest differences between tiers of players is their ability to minimize the amount of time spent focusing on a single task. In short, their ability to multi-task.
+However, current implementations of selection tracking [are not perfect](https://github.com/ggtracker/sc2reader/blob/upstream/sc2reader/engine/plugins/selection.py#L9) and documentation on how replay files are structured is [practically non-existent](https://github.com/Blizzard/s2protocol/tree/master/docs) (Especially the selection system), I needed to figure out and implement this myself.
 
-I like exploring different ways to analyze SC2 and since multi-tasking is an important aspect of the game, I wanted to analyze it in some way. I needed to be able to track what players are doing at every instant of the game.
+### Contents
+- **How the hell does this work?**
+- **It's ALIVE**
+- **`def _create_bitmask` (Not fun)**
+
+## How the hell does this work?
+
+
+
+## It's ALIVE
+
+
+
+## `def _create_bitmask` (Not fun)
+
 
 Two types of relevant events: SSelectionDeltaEvent and SControlGroupUpdateEvent.
 
