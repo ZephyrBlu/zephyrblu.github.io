@@ -3,37 +3,29 @@ layout: post
 title: Reverse Engineering the StarCraft II Selection System
 ---
 
-If you're unfamiliar with StarCraft II (SC2) it's a 1v1 Real-Time Strategy game that embodies the "commander" fantasy. You build up a base, an economy and an army and attempt to destroy all of your opponent's buildings.
+If you're unfamiliar with StarCraft II (SC2), it's a 1v1 Real-Time Strategy game that embodies the "commander" fantasy. You build up a base, an economy and an army and attempt to destroy all of your opponent's buildings.
 
-You control **almost everything** that happens in the game (Hence, the "commander" fantasy), and that means you're going to be clicking and using your keyboard a lot. High level players (Top ~5% or above) often play at 200-300 actions per minute (4-5 actions per **second**!).
+Almost everything that happens in the game is your responsibility (Hence, the "commander" fantasy), and that means you're going to be clicking and using your keyboard a lot (Pros often play at **300+ actions per minute**!).
 
-SC2 also has a powerful hotkey system and provides you with a few simple but flexible ways to manipulate selections of units and buildings. High level players frequently use these tools throughout the game to efficiently manage their resources and quickly execute tasks.
+SC2 also has a powerful hotkey system and provides you with a few simple but flexible ways to manipulate selections of units and buildings.
 
-Because the game is real-time, multi-tasking is extremely important and is one of the key differences between tiers of players.
-
-I like exploring different ways to analyze SC2 using the [replay parser](https://github.com/Zephyrblu/zephyrus-sc2-parser) I'm building, and being able to track a player's selections at every point in the game would provide a great foundation to analyze multi-tasking.
+I like exploring different ways to analyze SC2 using the [replay parser](https://github.com/Zephyrblu/zephyrus-sc2-parser) I'm building, and being able to track a player's selections at every point in the game seemed like it would provide a great foundation to analyze multi-tasking.
 
 However, current implementations of selection tracking [are not perfect](https://github.com/ggtracker/sc2reader/blob/upstream/sc2reader/engine/plugins/selection.py#L9) and documentation on how replay files are structured is [practically non-existent](https://github.com/Blizzard/s2protocol/tree/master/docs) (Especially the selection system), I needed to figure out and implement this myself.
 
-### Contents
-- **How the hell does this work?**
-- **It's ALIVE**
-- **`def _create_bitmask` (Not fun)**
-
 ## How the hell does this work?
 
+That's how I felt looking at the Selection and Control Group JSON events for the first time. At first glance it's impossible to understand how the in-game systems map to event data.
 
+Let's back up a little bit and explain 
 
-## It's ALIVE
-
-
-
-## `def _create_bitmask` (Not fun)
-
+- Exploring events
+- Verifying in replays
+- Building out an understanding
 
 Two types of relevant events: SSelectionDeltaEvent and SControlGroupUpdateEvent.
 
-Examples of events:
+Here's a Control Group event:
 
 ```
 {
@@ -47,6 +39,8 @@ Examples of events:
     '_bits': 56
 }
 ```
+
+And a Selection event:
 
 ```
 {
@@ -70,11 +64,18 @@ Examples of events:
 }
 ```
 
-We can already see that both Selection and Control Group events share a fair amount of similarities. The biggest differences are that Control Group events have update types, and Selection events have units attached to them. We'll see how these work together to create the overall system a bit later on.
+## It's ALIVE
 
-The first interesting thing to note is that a player's current selection is Control Group 10. 
+- Framework is up and running
+- The system works, kind of
+- Some issues...
 
-## Raw Selections
+## `def _create_bitmask` (Not fun)
 
-## Control Groups
+- The problem
+- The root cause
+- Special bitmasks explained
 
+## The afterlife
+
+- What happens when a unit dies?
