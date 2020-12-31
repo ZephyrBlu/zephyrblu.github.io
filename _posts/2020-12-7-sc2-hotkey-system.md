@@ -1,7 +1,15 @@
 ---
 layout: post
-title: Reverse Engineering the StarCraft II Selection System
+title: Reverse Engineering the StarCraft II Hotkey System
 ---
+
+----- This article is not finished yet -----
+
+----- I need a hook -----
+
+StarCraft II's hotkey system is one of the most useful and important parts of the entire game.
+
+----- I need a hook -----
 
 If you're unfamiliar with StarCraft II (SC2), it's a 1v1 Real-Time Strategy game that embodies the "commander" fantasy. You build up a base, an economy and an army and attempt to destroy all of your opponent's buildings.
 
@@ -75,7 +83,20 @@ And a Selection event:
 - The problem
 - The root cause
 - Special bitmasks explained
+- Previous implementation: https://github.com/ggtracker/sc2reader/blob/4c6703742094103842a9de827fd4a051e6cf7977/sc2reader/readers.py#L566-L592
 
 ## The afterlife
 
 - What happens when a unit dies?
+
+## A new discovery
+
+- Control Group update type 5 (Steal and bind)
+- Running the parser through thousands of pro replays to check for regressions
+- Find a lot of ControlGroup errors
+- Discover the new update type and quickly realize what it is
+- Double check functionality in dummy replays, then implement fix
+- All replays complete parsing, so can at least know that I am tracking every single selection made since there are no KeyErrors (Accessing a non-existent control group) or IndexErrors (Accessing an out-of-bounds index)!
+
+
+- Still not 100% about whether the selections are always correct or not, but manually verifying selections in replays is very time consuming and not very interesting. Am relatively convinced that it's accurate, or at least accurate enough.
