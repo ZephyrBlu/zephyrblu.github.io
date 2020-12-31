@@ -6,4 +6,6 @@ permalink: /about/
 
 Luke. 22, Kiwi, developer.
 
-Want to hire me? Let's chat: me@zephyrb.lu
+Email me!
+
+me@zephyrb.lu
