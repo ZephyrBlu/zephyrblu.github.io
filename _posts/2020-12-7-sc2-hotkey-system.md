@@ -3,13 +3,9 @@ layout: post
 title: Reverse Engineering the StarCraft II Hotkey System
 ---
 
------ This article is not finished yet -----
-
------ I need a hook -----
+In progress
 
 StarCraft II's hotkey system is one of the most useful and important parts of the entire game.
-
------ I need a hook -----
 
 If you're unfamiliar with StarCraft II (SC2), it's a 1v1 Real-Time Strategy game that embodies the "commander" fantasy. You build up a base, an economy and an army and attempt to destroy all of your opponent's buildings.
 
