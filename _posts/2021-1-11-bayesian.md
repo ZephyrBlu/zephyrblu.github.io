@@ -49,6 +49,7 @@ title: Bayesian Statistics for Programmers
 - Bayesian tables
 - Simple conditional probability
 - Multiple ways of computing the answer
+- These are discrete
 
 <details>
     <summary style="cursor:pointer">
@@ -67,7 +68,7 @@ title: Bayesian Statistics for Programmers
 
 ----- Part 2: Distributions -----
 
-## Using Bayes' Theorem with Distributions
+## Using Bayes' Theorem with Continuous Distributions
 - Replace static prior with distribution
 - Posterior is also now a distribution
 - Show analytical calculation of posterior distribution
@@ -134,7 +135,7 @@ title: Bayesian Statistics for Programmers
 <details>
     <summary style="cursor:pointer">
         <h3 style="display:inline-block;">
-            Side Note: Monte Carlo Simulations Explained
+            Side Note: MCMC Simulations Explained
         </h3>
     </summary>
     <ul style="margin-top:0">
@@ -142,18 +143,71 @@ title: Bayesian Statistics for Programmers
         <li>Purpose of Monte Carlo simulations: Approximating intractable problems numerically</li>
         <li>Specifics behind the process they use</li>
     </ul>
+    First, let's quickly go over what "Markov Chain Monte Carlo" actually means.
+
+    Markov Chains are basically just a stateless random process (I.e the next state is purely based on the current state).
+
+    Monte Carlo in this case refers to a family of algorithms known as "Monte Carlo methods", which are generally used for numerical approximation of an intractable or otherwise difficult computation.
+
+    They approach this by randomly sampling from a probability distribution, then aggregating the sampled values and calculating an approximation. This is a well laid out example: https://en.wikipedia.org/wiki/Monte_Carlo_method#Overview
+
+    In this case, we use a Monte Carlo algorithm to approximate the integral of p(x) (I.e. the area ).
 </details>
 
 <details>
     <summary style="cursor:pointer">
         <h3 style="display:inline-block;">
-            Side Note: Markov Chains Explained
+            Side Note: The Metropolis-Hastings and Hamiltonian Monte Carlo Sampling Algorithms
         </h3>
     </summary>
     <ul style="margin-top:0">
-        <li>What are Markov Chains?</li>
-        <li>How do they work?</li>
+        <li>These are common MCMC sampling algorithms</li>
+        <li>MH is older, HMC is more modern and common nowadays</li>
+        <li>Brief overview of each</li>
+        <li>Similarities and differences</li>
+        <li>Why is HMC 'better'?</li>
     </ul>
+
+    <h4>Metropolis-Hastings</h4>
+    Metropolis-Hastings does not directly sample from a distribution, but uses a clever technique to *effectively* sample the distribution.
+
+    To generate samples, the algorithm only requires that you have a function f(x) that is *proportional* to the distribution P(x). That is, f(x) * k = P(x).
+
+    How does this work? We'll step through how the algorithm works to find out:
+
+    1) Choose and arbitrary starting point for the initial sample, x<sub>t</sub>. Also choose an arbitrary probability distribution, g(x|y) (Called the "proposal density" or "jumping distribution"), to serve as a sample generator. This is usually a Gaussian (Normal) distribution centered on y, which means that points close to y are more likely to be selected as the next sample candidate.
+
+    2a) Randomly generate a candidate sample for the iteration from g like so: g(x'|x<sub>t</sub>)
+
+    2b) Calculate the acceptance ratio of the candidate. This is the special sauce. Earlier we said that the algorithm only requires a function f(x) which is proportional to P(x), rather than being exact. Calculating the acceptance ratio leverages this fact.
+
+    a = f(x')/f(x<sub>t</sub>) = P(x')/P(x<sub>t</sub>)
+
+    This works because the normalizing constant is cancelled out
+
+    a = (f(x') * k)/(f(x<sub>t</sub>) * k) = P(x')/P(x<sub>t</sub>)
+
+    What we are calculating here is the probability of the new sample, relative to the previous sample. If the new sample is more probable, it means it is in a higher density (I.e. higher frequency) region of P(x) distribution.
+
+    This is the core reason why the algorithm converges on the P(x) distribution over many samples. Values from high density regions of P(x) are sampled more frequently simply by virtue of them being more likely, and vice versa.
+
+    2c) Accept or reject the candidate sample. Here is where we use the acceptance ratio to generate randomness in the process. We generate a random number in range [0, 1] from a uniform distribution (I.e. every value has an equal chance).
+
+    If this number is <= to the acceptance ratio, we accept the new sample, update x<sub>t</sub> to x<sub>t+1</sub> and set x<sub>t+1</sub> to equal the newly generated sample.
+
+    If the number of less than the acceptance ratio, x<sub>t</sub> is updated to x<sub>t+1</sub>, but the value remains unchanged for the next iteration.
+
+    3) Repeat step 2 until you reach the desired number of iterations
+
+    The Metropolis-Hastings algorithm works well, but has a couple of drawbacks.
+
+    Remember how Markov Chains generate new states based on the current state? That means that states (And therefore generated samples) are somewhat correlated. This is bad because it means that locally, samples will not reflect P(x) (Though globally samples will converge on P(x)).
+
+    Another problem related to the distribution of samples is that even though they eventually converge on P(x), initial samples may not. This may require specifying a "burn-in" period where initial samples are discarded to reduce bias in the generated samples.
+
+    https://en.wikipedia.org/wiki/Metropolis%E2%80%93Hastings_algorithm
+
+    <h4>Hamiltonian Monte Carlo</h4>
 </details>
 
 ---- Part 4: Real-World Applications -----
