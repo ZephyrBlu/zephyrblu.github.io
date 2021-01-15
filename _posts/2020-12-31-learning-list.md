@@ -4,8 +4,8 @@ title: Things to Learn
 ---
 
 - **Statistics/Probability**
-    - Bayesian
-    - Stronger grasp of more advanced statistics in general
+    - Bayesian -- Getting there
+    - Stronger grasp of basic statistics in general
 
     Resources:
     - <https://github.com/CamDavidsonPilon/Probabilistic-Programming-and-Bayesian-Methods-for-Hackers>
@@ -20,6 +20,15 @@ title: Things to Learn
     Resources:
     - <https://www.quantstart.com/articles/>
     - <https://www.fast.ai/>
+
+-----
+
+- **Consensus Algorithms**
+    - How many are there?
+    - How does Paxos work?
+    - How does Multi-Paxos work?
+    - How does Raft work?
+    - Implement at least 1 (Preferably in Rust)
 
 -----
 

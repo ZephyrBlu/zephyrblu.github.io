@@ -94,33 +94,9 @@ title: Bayesian Statistics for Programmers
 - Basic model/prior conjugates
 - Conjugates explained intuitively
     - Certain distributions are underpinned by more generic distributions defined by the Alpha and Beta hyperparameters
-- https://www.lesswrong.com/posts/u2gWM2poRPkBPFeLc/the-joys-of-conjugate-priors
-
-<details>
-    <summary style="cursor:pointer">
-        <h3 style="display:inline-block;">
-            Side Note: The Beta Distribution Explained
-        </h3>
-    </summary>
-    <ul style="margin-top:0">
-        <li>Beta distribution is a common prior</li>
-        <li>Intuition for beta distribution: https://stats.stackexchange.com/questions/47771/what-is-the-intuition-behind-beta-distribution</li>
-        <li>Interpreting Alpha and Beta as successes and failures in the dataset (Relationship to other distributions)</li>
-        <li>Simplifying posterior calculation using Beta function</li>
-        <li>Gamma & Beta function explained: http://www.mhtl.uwaterloo.ca/courses/me755/web_chap1.pdf</li>
-    </ul>
-</details>
-
-<details>
-    <summary style="cursor:pointer">
-        <h3 style="display:inline-block;">
-            Side Note: Understanding the Math Behind Conjugate Priors
-        </h3>
-    </summary>
-    <ul style="margin-top:0">
-        <li>Gamma & Beta function explained: http://www.mhtl.uwaterloo.ca/courses/me755/web_chap1.pdf</li>
-    </ul>
-</details>
+- If you want to learn more about conjugate priors (Be warned, it's very math heavy and quite complicated):
+    - https://www.lesswrong.com/posts/u2gWM2poRPkBPFeLc/the-joys-of-conjugate-priors
+    - https://stats.stackexchange.com/questions/47771/what-is-the-intuition-behind-beta-distribution
 
 ---- Part 3: Simulations -----
 
